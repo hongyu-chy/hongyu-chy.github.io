@@ -4,7 +4,7 @@ title:  "Stack Over Flow 初探"
 date:   2016-01-09 19:53:44
 author: sunrainchy
 categories: ShellCode
-image: http://site-img-data.oss-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/hacker.jpg
+image: http://blog-data.chenhongyu.cn/blog-data/2016.01.09/hacker.jpg@600w_600h
 ---
 从一次实践来了解什么是StackOverFlow，从一段简单的C语言代码入手。
 cat exploit.c 
