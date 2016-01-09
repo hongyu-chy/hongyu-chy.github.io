@@ -4,7 +4,6 @@ title:  "一次Nginx 负载不均调查过程"
 date:   2015-12-14 22:31:05
 author: sunrainchy
 categories: Nginx
-image: true
 ---
 
 
