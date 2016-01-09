@@ -22,7 +22,7 @@ pstack 一下看看这个最忙的进程在干啥：
    为什么这个样子，猜想可能是Nginx负载均衡那里出问题了，于是查了查资料翻了翻Nginx源码，源码看看负载均衡那块。Nginx accept 会在进程间上一个锁，保同一时间只会有一个进程去accept连接，在epoll_wait 返回之后会将事件分成两类，分别放到两个post队列中，接下来Nginx 优先处理accept事件，好让ngx_accept_mutex 锁尽快释放让其他进程能尽快拿到这把锁去accept连接，开始怀疑是这块问题，在压力大的时候这里锁会一直hold 住直到所有的accept 事件被处理完（epoll 的 ready事件队列中也没有accept事件），翻了源码，这样写的：
 
 <div class="post-img">
-<img class="img-responsive img-post" src=" {{site.baseurl}}/img/ngx-accept-code-20151214.png"/>
+<img class="img-responsive img-post" src=" {{site.baseurl}}/image/ngx-accept-code-20151214.png"/>
 </div>
 
 259 行，每次处理完accept 事件后会去释放ngx_accept_mutex, 那按照道理是不会造成ngx_mutex_lock hold 住的情况的，一次epoll_wait 返回处理完所有Accept事件后一定会把ngx_mutex_lock 释放掉。
@@ -31,18 +31,18 @@ pstack 一下看看这个最忙的进程在干啥：
  void
  ngx_event_accept(ngx_event_t *ev)
 Accept 调用处在一个循环里面：
-```
+{% highlight ruby %}
 	do {
           // More code here
   	      s = accept(lc->fd, (struct sockaddr *) sa, &socklen);
           // More code here
  	} while (ev->available);
-```
+{% endhighlight %}
 看看 ev->available 是什么鬼<br>
 在代码里grep multi_accept :<br>
-```
+{% highlight ruby %}
 ./event/ngx_event_accept.c:        ev->available = ecf->multi_accept;
-```
+{% endhighlight %}
 果然是这个东西搞得鬼。
 
 原因总结：
