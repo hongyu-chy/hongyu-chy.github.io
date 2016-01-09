@@ -4,10 +4,11 @@ title:  "Stack Over Flow 初探"
 date:   2016-01-09 19:53:44
 author: sunrainchy
 categories: ShellCode
-image: http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2015.12.12/nginx.jpg
+image: http://site-img-data.oss-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/hacker.jpg
 ---
 从一次实践来了解什么是StackOverFlow，从一段简单的C语言代码入手。
 cat exploit.c 
+{% highlight ruby %}
 void fun_1(void) 
 { 
     printf("This is fun 1\n"); 
@@ -18,18 +19,20 @@ int main()
 { 
     fun_1(); 
 }
+{% endhighlight %}
 保存为：exploit.c
+
 cc -mpreferred-stack-boundary=2 -ggdb exploit.c -o exploit -fno-stack-protector 
 -fno-stack-protector 告诉gcc我们不想一栈溢出保护机制进行编译（如果不加上实验会失败）
 
 编译好了先用GDB看一下：
 <div class="post-img">
-<img class="img-responsive img-post" src="http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2015.12.12/ngx_top_20151214.png"/>
+<img class="img-responsive img-post" src="http://site-img-data.oss-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/gdb-start.png"/>
 </div>
 
 执行disassemble 命令，对main函数进行反汇编
 <div class="post-img">
-<img class="img-responsive img-post" src="http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2015.12.12/ngx_top_20151214.png"/>
+<img class="img-responsive img-post" src="http://site-img-data.oss-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/disassemble-main.png"/>
 </div>
 
 可以看到在调用完成fun_1 函数后下一条指令地址是0x0804482b
@@ -38,10 +41,11 @@ cc -mpreferred-stack-boundary=2 -ggdb exploit.c -o exploit -fno-stack-protector
 disassemble fun_1
 
 <div class="post-img">
-<img class="img-responsive img-post" src="http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2015.12.12/ngx_top_20151214.png"/>
+<img class="img-responsive img-post" src="http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/disassemble-fun-1.png"/>
 </div>
 
 分析下这段汇编代码：
+{% highlight ruby %}
 Dump of assembler code for function fun_1: 
    0x08048404 <+0>: push   %ebp                                    // 基栈寄存器入站，保存
    0x08048405 <+1>: mov    %esp,%ebp                          // 用当前栈顶作为基栈地址
@@ -54,15 +58,19 @@ Dump of assembler code for function fun_1:
    0x08048421 <+29>:    leave  
    0x08048422 <+30>:    ret    
 
+{% endhighlight %}
 
 在这里我们可以设置两个断点，看看此函数返回main 函数下一条指令地址是不是0x0804482b：
+
+{% highlight ruby %}
 (gdb) break *0x08048422 
 Breakpoint 1 at 0x8048422: file exploit.c, line 7. 
 
+{% endhighlight %}
 在最后ret 指令出停止
 
 <div class="post-img">
-<img class="img-responsive img-post" src="http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2015.12.12/ngx_top_20151214.png"/>
+<img class="img-responsive img-post" src="http://site-img-data.oss-cn-shanghai.aliyuncs.com/blog-data/2016.01.09/print-esp.png"/>
 </div>
 
 看第一行，找到0x0804482b了吧
