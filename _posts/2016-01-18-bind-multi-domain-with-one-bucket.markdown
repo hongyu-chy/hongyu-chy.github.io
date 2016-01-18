@@ -17,6 +17,7 @@ image: http://blog-data.chenhongyu.cn/blog-data/2016.01.09/hacker.jpg@600w_600h
 ![这里写图片描述](http://img.blog.csdn.net/20160118205117218)
 <br>
 **点击右上角添加新域名**
+<br>
 ![这里写图片描述](http://img.blog.csdn.net/20160118205310249)
 <br>
 ![这里写图片描述](http://img.blog.csdn.net/20160118205725951)
@@ -38,11 +39,13 @@ dig cdn-test.chenhongyu.cn
 cdn-test.chenhongyu.cn.   600   IN   CNAME   cdn-test.chenhongyu.cn.w.kunlunar.com.
 **在浏览器上访问这个域名，出现如下结果，绑定成功**
 ![这里写图片描述](http://img.blog.csdn.net/20160118211022334)
+<br>
 **还有最后一步，由于我们直接访问的是域名，cdn拿到请求后转发给oss，host头部为**
 **cdn-test.chenhongyu.cn, oss 不知道这个host对应的bucket是什么，因此要将cdn**
 **回源host头部改掉，点击回源Host，选择源站域名。**
 ![这里写图片描述](http://img.blog.csdn.net/20160118210227987)
 ![这里写图片描述](http://img.blog.csdn.net/20160118211329226)
+<br>
 **至此一个域名绑定到bucket（channel）成功，再加一个域名同样的步骤重复一次即可。**
 
 
