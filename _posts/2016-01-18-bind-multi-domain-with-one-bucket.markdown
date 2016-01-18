@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "#阿里云OSS 图片处理如何借助CDN将多个域名绑定一个bucket（channel）上"
+title:  "阿里云OSS 图片处理如何借助CDN将多个域名绑定到一个bucket（channel）上"
 date:   2016-01-18 22:53:44
 author: sunrainchy
 categories: ShellCode
