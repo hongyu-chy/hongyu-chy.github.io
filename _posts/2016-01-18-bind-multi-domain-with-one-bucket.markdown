@@ -15,6 +15,7 @@ image: http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2016.01.18/al
 **登陆到阿里云CDN控制台：https://cdn.console.aliyun.com/console/index#/**
 <br>
 **点击左上角的CDN域名列表**
+<br>
 ![这里写图片描述](http://img.blog.csdn.net/20160118205117218)
 <br>
 **点击右上角添加新域名**
