@@ -56,4 +56,5 @@ cdn-test.chenhongyu.cn.   600   IN   CNAME   cdn-test.chenhongyu.cn.w.kunlunar.c
 <br>
 **至此一个域名绑定到bucket（channel）成功，再加一个域名同样的步骤重复一次即可。**
 
-
+**一句话总结以上步骤：申请多个CDN回源域名，将回源地址填写为同意个bucket对应的三级域名，
+并更改回源host 头部为源头站域名。**
