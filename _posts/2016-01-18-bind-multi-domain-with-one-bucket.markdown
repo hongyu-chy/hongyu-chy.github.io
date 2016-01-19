@@ -33,6 +33,7 @@ image: http://site-img-data.img-cn-shanghai.aliyuncs.com/blog-data/2016.01.18/al
 **简单截个图:**
 <br>
 ![这里写图片描述](http://img.blog.csdn.net/20160118210508619)
+<br>
 **完成之后可以dig下域名**
 <br>
 ```
@@ -43,6 +44,7 @@ dig cdn-test.chenhongyu.cn
 <br>
 cdn-test.chenhongyu.cn.   600   IN   CNAME   cdn-test.chenhongyu.cn.w.kunlunar.com.
 **在浏览器上访问这个域名，出现如下结果，绑定成功**
+<br>
 ![这里写图片描述](http://img.blog.csdn.net/20160118211022334)
 <br>
 **还有最后一步，由于我们直接访问的是域名，cdn拿到请求后转发给oss，host头部为**
